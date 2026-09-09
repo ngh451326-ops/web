@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THE 3RD EYE · BIOS CHEATS</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👁️</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Space Grotesk',sans-serif;
+      background:#000;
+      color:#fff;
+      min-height:100vh;
+      overflow-x:hidden;
+      position:relative;
+    }
+    :root{
+      --bg:#000;
+      --bg-card:rgba(18,16,24,0.86);
+      --border:rgba(255,255,255,0.08);
+      --border-strong:rgba(255,255,255,0.15);
+      --text:#fff;
+      --text-muted:#8a8797;
+      --text-dim:#55525f;
+      --radius:14px;
+      --radius-sm:10px;
+      --ease:cubic-bezier(0.16,1,0.3,1);
+      --mono:'JetBrains Mono',monospace;
+      --accent:#8b5cf6;
+      --accent2:#22d3ee;
+      --accent3:#f2c94c;
+      --accent-grad:linear-gradient(120deg,#8b5cf6,#22d3ee 60%,#c084fc);
+      --accent-glow:rgba(139,92,246,0.45);
+    }
+    body::before{
+      content:'';
+      position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:radial-gradient(circle at 18% 22%, rgba(139,92,246,0.10) 0%, transparent 55%),
+                 radial-gradient(circle at 82% 18%, rgba(34,211,238,0.07) 0%, transparent 50%),
+                 radial-gradient(circle at 50% 100%, rgba(139,92,246,0.06) 0%, transparent 60%);
+    }
+    body::after{
+      content:'';
+      position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.2;
+      background-image:linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size:60px 60px;
+    }
+    #particleCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.55;}
+    #scanlineLayer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0.25;}
+    #scanlineLayer::before{content:'';position:absolute;left:0;right:0;height:120px;top:-120px;background:linear-gradient(180deg,transparent,rgba(139,92,246,0.06),rgba(34,211,238,0.04),transparent);animation:scanMove 7s linear infinite;}
+    #cursorGlow{position:fixed;top:0;left:0;width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(139,92,246,0.10),rgba(34,211,238,0.04) 45%,transparent 70%);transition:opacity 0.4s ease;opacity:0;will-change:transform;}
+    ::-webkit-scrollbar{width:6px;}
+    ::-webkit-scrollbar-track{background:#000;}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(#8b5cf6,#22d3ee);border-radius:10px;}
+
+    @keyframes scanMove{0%{transform:translateY(-120px);}100%{transform:translateY(100vh);}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(139,92,246,0.25),0 0 2px rgba(255,255,255,0.4) inset;}50%{box-shadow:0 0 42px rgba(139,92,246,0.55),0 0 60px rgba(34,211,238,0.18);}}
+    @keyframes drawBar{from{width:100%;}to{width:0%;}}
+    @keyframes toastIn{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
+    @keyframes blinkCursor{0%,100%{opacity:1;}50%{opacity:0;}}
+    @keyframes ringPulse{0%{transform:scale(0.8);opacity:0.8;}100%{transform:scale(1.8);opacity:0;}}
+    @keyframes hueRotate{0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}}
+    @keyframes borderSpin{to{transform:rotate(360deg);}}
+    @keyframes shine{0%{transform:translateX(-120%) skewX(-20deg);}100%{transform:translateX(220%) skewX(-20deg);}}
+    @keyframes irisPop{0%{opacity:0;transform:scale(0.82) translateY(10px);filter:blur(6px);}60%{filter:blur(0);}100%{opacity:1;transform:scale(1) translateY(0);}}
+    @keyframes popOut{from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.92);}}
+
+    .app-wrapper{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:20px 24px 40px;min-height:100vh;display:flex;flex-direction:column;}
+    .brand-header{display:flex;align-items:center;justify-content:space-between;padding:10px 0 20px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px;}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+    .brand-icon{width:44px;height:44px;border-radius:50%;background:conic-gradient(from 0deg,#8b5cf6,#22d3ee,#c084fc,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:20px;color:#000;flex-shrink:0;animation:pulseGlow 3.5s infinite,hueRotate 8s linear infinite;position:relative;}
+    .brand-icon::before{content:'';position:absolute;inset:3px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#fff,#151018);}
+    .brand-icon span:first-child{position:relative;z-index:1;filter:drop-shadow(0 0 6px rgba(139,92,246,0.8));}
+    .brand-icon .badge{position:absolute;top:-2px;right:-2px;width:12px;height:12px;background:var(--accent-grad);border-radius:50%;border:2px solid #000;box-shadow:0 0 12px rgba(139,92,246,0.8);z-index:2;}
+    .brand-text .main{font-family:'Orbitron',sans-serif;font-weight:900;font-size:18px;letter-spacing:1.5px;background:linear-gradient(120deg,#fff 20%,#c4b5fd 45%,#67e8f9 60%,#fff 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:gradientMove 4s ease infinite;display:block;}
+    .brand-text .sub{font-family:'Orbitron',sans-serif;font-weight:500;font-size:9px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;display:block;margin-top:2px;}
+    .brand-text .sub span{color:var(--accent2);text-shadow:0 0 10px rgba(34,211,238,0.5);}
+    @keyframes gradientMove{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius-sm);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;cursor:pointer;border:1px solid var(--border-strong);background:transparent;color:#fff;transition:all 0.25s var(--ease);text-decoration:none;position:relative;overflow:hidden;}
+    .btn::after{content:'';position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,0.35),transparent);transform:translateX(-120%) skewX(-20deg);pointer-events:none;}
+    .btn:hover::after{animation:shine 0.9s ease;}
+    .btn:active{transform:scale(0.96);}
+    .btn-primary{background:var(--accent-grad);color:#0a0510;border-color:transparent;box-shadow:0 4px 24px rgba(139,92,246,0.35);font-weight:700;}
+    .btn-primary:hover{box-shadow:0 8px 34px rgba(139,92,246,0.55),0 0 30px rgba(34,211,238,0.25);transform:translateY(-1px);}
+    .btn-outline{background:rgba(255,255,255,0.03);}
+    .btn-outline:hover{background:rgba(139,92,246,0.08);border-color:var(--accent);box-shadow:0 0 18px rgba(139,92,246,0.15);}
+    .btn-danger{background:rgba(255,90,90,0.1);color:#ff9d9d;border-color:rgba(255,90,90,0.25);}
+    .btn-danger:hover{background:rgba(255,90,90,0.2);box-shadow:0 0 18px rgba(255,90,90,0.2);}
+    .btn-success{background:rgba(34,211,238,0.1);color:#67e8f9;border-color:rgba(34,211,238,0.25);}
+    .btn-success:hover{background:rgba(34,211,238,0.18);box-shadow:0 0 18px rgba(34,211,238,0.2);}
+    .btn-sm{padding:6px 14px;font-size:12px;}
+    .btn-xs{padding:4px 10px;font-size:10px;border-radius:6px;}
+    .btn-block{width:100%;justify-content:center;}
+    .btn[disabled]{opacity:0.5;cursor:not-allowed;transform:none !important;}
+
+    .card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 30px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 12px 40px -12px rgba(0,0,0,0.8);transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;overflow:hidden;isolation:isolate;}
+    .card::before{content:'';position:absolute;inset:0;padding:1px;border-radius:inherit;background:conic-gradient(from 0deg,var(--accent),var(--accent2),transparent 30%,transparent 70%,var(--accent));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity 0.4s ease;animation:borderSpin 6s linear infinite;pointer-events:none;z-index:-1;}
+    .card:hover{border-color:transparent;transform:translateY(-3px);box-shadow:0 20px 50px -12px rgba(0,0,0,0.85),0 0 30px -6px rgba(139,92,246,0.25);}
+    .card:hover::before{opacity:1;}
+    .card-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:16px;letter-spacing:0.3px;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+    .card-title i{color:var(--accent2);}
+    .card-sub{font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.5;}
+    .hud-corner{position:absolute;width:14px;height:14px;border-color:rgba(139,92,246,0.35);pointer-events:none;z-index:2;transition:border-color 0.3s;}
+    .card:hover .hud-corner{border-color:var(--accent2);}
+    .hud-corner.tl{top:8px;left:8px;border-top:2px solid;border-left:2px solid;}
+    .hud-corner.tr{top:8px;right:8px;border-top:2px solid;border-right:2px solid;}
+    .hud-corner.bl{bottom:8px;left:8px;border-bottom:2px solid;border-left:2px solid;}
+    .hud-corner.br{bottom:8px;right:8px;border-bottom:2px solid;border-right:2px solid;}
+
+    .form-group{margin-bottom:16px;}
+    .form-group label{display:block;font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;}
+    .form-control{width:100%;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid var(--border-strong);border-radius:var(--radius-sm);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:13px;transition:border-color 0.25s,box-shadow 0.25s;outline:none;}
+    .form-control:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,92,246,0.18),0 0 20px -6px rgba(139,92,246,0.4);background:rgba(139,92,246,0.05);}
+    .form-control::placeholder{color:var(--text-dim);}
+    .input-icon-group{position:relative;}
+    .input-icon-group i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:13px;pointer-events:none;}
+    .input-icon-group .form-control{padding-left:36px;}
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:22px;}
+    .stat-item{position:relative;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;text-align:center;transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;}
+    .stat-item:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 26px -10px rgba(139,92,246,0.4);}
+    .stat-item .label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-weight:600;}
+    .stat-item .value{font-family:'Orbitron',sans-serif;font-size:17px;font-weight:700;margin-top:4px;background:linear-gradient(120deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;word-break:break-all;}
+    .stat-item .copy-mini{position:absolute;top:6px;right:6px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-muted);border-radius:4px;width:20px;height:20px;font-size:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;}
+    .stat-item .copy-mini:hover{color:#000;background:var(--accent-grad);border-color:transparent;box-shadow:0 0 12px rgba(139,92,246,0.6);}
+
+    .badge-status{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:0.3px;font-family:'Orbitron',sans-serif;}
+    .badge-status.active{background:linear-gradient(120deg,rgba(139,92,246,0.18),rgba(34,211,238,0.15));color:#e0d4ff;border:1px solid rgba(139,92,246,0.4);box-shadow:0 0 14px rgba(139,92,246,0.25);}
+    .badge-status.inactive{background:rgba(255,255,255,0.05);color:var(--text-muted);border:1px solid var(--border);}
+    .badge-status .dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:currentColor;}
+    .badge-status.active .dot{background:var(--accent2);box-shadow:0 0 8px var(--accent2);animation:blinkCursor 1.6s ease-in-out infinite;}
+
+    .table-wrap{overflow-x:auto;margin-top:12px;}
+    table{width:100%;border-collapse:collapse;font-size:12px;}
+    table th{text-align:left;padding:10px 12px;color:var(--text-muted);font-weight:700;font-size:9.5px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);}
+    table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);}
+    table tbody tr:hover{background:rgba(255,255,255,0.02);}
+    table .key-cell{font-family:var(--mono);font-size:10px;color:#fff;letter-spacing:0.3px;}
+
+    .tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:20px;flex-wrap:wrap;}
+    .tab-btn{padding:10px 18px;background:transparent;border:none;color:var(--text-muted);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;position:relative;}
+    .tab-btn:hover{color:#fff;}
+    .tab-btn.active{color:#fff;border-image:var(--accent-grad) 1;text-shadow:0 0 12px rgba(139,92,246,0.5);}
+    .tab-pane{display:none;}
+    .tab-pane.active{display:block;animation:fadeUp 0.3s ease both;}
+
+    .toast-container{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:360px;width:calc(100% - 40px);}
+    .toast{position:relative;padding:12px 16px;border-radius:var(--radius-sm);background:rgba(14,12,20,0.95);border:1px solid var(--border-strong);backdrop-filter:blur(8px);box-shadow:0 10px 30px rgba(0,0,0,0.6);display:flex;align-items:center;gap:10px;animation:toastIn 0.35s var(--ease) both;font-size:12.5px;color:#fff;overflow:hidden;}
+    .toast::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent-grad);}
+    .toast.success::before{background:linear-gradient(#22d3ee,#8b5cf6);}
+    .toast.error::before{background:linear-gradient(#ff6b6b,#c084fc);}
+    .toast .toast-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--accent-grad);opacity:0.6;animation:drawBar 4s linear forwards;}
+
+    .auth-container{max-width:420px;margin:40px auto 30px;padding:0 16px;position:relative;z-index:2;}
+    .auth-container .card{padding:38px 34px;}
+    .auth-container .brand-center{text-align:center;margin-bottom:24px;}
+    .auth-container .brand-center .brand-icon{margin:0 auto 14px;width:64px;height:64px;font-size:26px;}
+    .auth-container .brand-center h2{font-family:'Orbitron',sans-serif;font-weight:800;font-size:20px;letter-spacing:0.5px;}
+    .auth-container .form-footer{margin-top:16px;text-align:center;font-size:12.5px;color:var(--text-muted);}
+    .auth-container .form-footer a{color:#fff;text-decoration:none;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.2);}
+
+    .section-title{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px;}
+    .section-title h2{font-family:'Orbitron',sans-serif;font-weight:700;font-size:17px;letter-spacing:0.3px;}
+    .section-title h2 .highlight{color:#fff;border-bottom:2px solid #fff;padding-bottom:2px;}
+
+    .lock-screen{max-width:520px;margin:20px auto 0;position:relative;z-index:2;}
+    .lock-icon-wrap{position:relative;width:100px;height:100px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;}
+    .lock-icon-wrap .ring{position:absolute;border-radius:50%;border:1px solid rgba(139,92,246,0.35);}
+    .lock-icon-wrap .ring.r1{inset:0;animation:ringPulse 2.8s ease-out infinite;border-color:rgba(139,92,246,0.4);}
+    .lock-icon-wrap .ring.r2{inset:12px;animation:ringPulse 2.8s ease-out infinite 0.6s;border-color:rgba(34,211,238,0.35);}
+    .lock-icon-wrap .ring.r3{inset:24px;animation:ringPulse 2.8s ease-out infinite 1.2s;border-color:rgba(192,132,252,0.35);}
+    .lock-icon-wrap .core{width:56px;height:56px;border-radius:50%;background:conic-gradient(from 90deg,#8b5cf6,#22d3ee,#c084fc,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:22px;color:#000;box-shadow:0 0 40px rgba(139,92,246,0.45);animation:floatSlow 4.5s ease-in-out infinite,hueRotate 10s linear infinite;position:relative;z-index:1;}
+    .lock-icon-wrap .core::before{content:'';position:absolute;inset:3px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#eee,#161018);}
+    .lock-icon-wrap .core span{position:relative;z-index:1;}
+    @keyframes floatSlow{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
+    .dash-hero{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+    .dash-hero-info{flex:1;min-width:180px;}
+    .dash-hero-info .provider-name{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;letter-spacing:0.3px;margin-bottom:2px;}
+    .dash-hero-info .username-line{font-size:12px;color:var(--text-muted);margin-bottom:10px;}
+    .ring-wrap{position:relative;width:110px;height:110px;flex-shrink:0;}
+    .ring-wrap svg{transform:rotate(-90deg);}
+    .ring-bg{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:7;}
+    .ring-fg{fill:none;stroke:url(#ringGradient);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset 1.2s ease;filter:drop-shadow(0 0 8px rgba(139,92,246,0.5));}
+    .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+    .ring-center .big{font-family:'Orbitron',sans-serif;font-weight:800;font-size:18px;color:#fff;}
+    .ring-center .small{font-size:7px;letter-spacing:0.8px;color:var(--text-muted);text-transform:uppercase;margin-top:1px;}
+
+    .terminal-box{font-size:12px;color:var(--text-muted);background:rgba(0,0,0,0.4);padding:12px 14px;border-radius:6px;font-family:var(--mono);word-break:break-all;line-height:1.6;border:1px solid var(--border);}
+    .terminal-box .cursor{display:inline-block;width:6px;height:12px;background:#fff;margin-left:2px;vertical-align:middle;animation:blinkCursor 1s step-end infinite;}
+
+    .collapse-panel{overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s ease,opacity 0.3s ease;}
+    .collapse-panel.open{max-height:300px;opacity:1;margin-top:10px;}
+
+    .app-footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:10.5px;color:var(--text-dim);letter-spacing:0.2px;position:relative;z-index:1;}
+
+    .page-enter{animation:fadeUp 0.4s ease both;}
+    .reveal{animation:fadeUp 0.5s ease both;}
+    .mt-8{margin-top:8px;}
+    .mt-24{margin-top:24px;}
+    .text-center{text-align:center;}
+    .flex-between{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+    .spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* resources grid */
+    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:10px;}
+    .resource-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;transition:border-color 0.3s,transform 0.3s;}
+    .resource-card:hover{border-color:var(--border-strong);transform:translateY(-2px);}
+    .resource-card .r-icon{font-size:16px;color:#fff;margin-right:8px;}
+    .resource-card .r-title{font-weight:600;font-size:13px;color:#fff;}
+    .resource-card .r-content{font-size:12px;color:var(--text-muted);margin-top:6px;word-break:break-all;}
+    .resource-card .r-content a{color:#fff;text-decoration:underline;}
+
+    /* announcement modal */
+    .modal-overlay{position:fixed;inset:0;z-index:9998;background:radial-gradient(circle at 50% 40%,rgba(139,92,246,0.12),rgba(0,0,0,0.82) 60%);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeUp 0.25s ease;}
+    .modal-box{position:relative;max-width:480px;width:100%;background:linear-gradient(180deg,rgba(22,18,30,0.97),rgba(12,10,16,0.98));border:1px solid rgba(139,92,246,0.3);border-radius:var(--radius);padding:32px 30px;box-shadow:0 30px 80px rgba(0,0,0,0.85),0 0 60px -10px rgba(139,92,246,0.35);animation:irisPop 0.45s var(--ease) both;overflow:hidden;}
+    .modal-box::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle,rgba(139,92,246,0.25),transparent 65%);pointer-events:none;}
+    .modal-box.closing{animation:popOut 0.25s ease both;}
+    .modal-box .modal-icon{width:44px;height:44px;border-radius:12px;background:var(--accent-grad);display:flex;align-items:center;justify-content:center;font-size:18px;color:#0a0510;margin-bottom:14px;box-shadow:0 0 24px rgba(139,92,246,0.5);}
+    .modal-box h3{font-family:'Orbitron',sans-serif;font-size:16px;margin-bottom:6px;position:relative;}
+    .modal-box .modal-msg{font-size:13px;color:var(--text-muted);line-height:1.7;margin:12px 0 22px;position:relative;}
+    .modal-box .modal-urgency{display:inline-block;padding:2px 12px;border-radius:100px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;background:rgba(139,92,246,0.15);color:#e0d4ff;border:1px solid rgba(139,92,246,0.35);}
+    .modal-box .modal-urgency.warning{background:rgba(242,201,76,0.12);color:#f2c94c;border-color:rgba(242,201,76,0.35);}
+    .modal-box .modal-urgency.critical{background:rgba(255,90,90,0.15);color:#ff9d9d;border-color:rgba(255,90,90,0.4);animation:pulseGlow 1.6s infinite;}
+
+    @media (max-width:900px){.grid-2{grid-template-columns:1fr;}}
+    @media (max-width:600px){
+      .brand-text .main{font-size:14px;}
+      .brand-icon{width:36px;height:36px;font-size:16px;}
+      .card{padding:18px 14px;}
+      .auth-container .card{padding:24px 16px;}
+      .stat-grid{grid-template-columns:1fr 1fr;}
+      .app-wrapper{padding:12px 10px 28px;}
+      .dash-hero{justify-content:center;text-align:center;}
+      .resource-grid{grid-template-columns:1fr;}
+    }
+    @media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms !important;}}
+  </style>
+</head>
+<body>
+<canvas id="particleCanvas"></canvas>
+<div id="scanlineLayer"></div>
+<div id="cursorGlow"></div>
+<div class="toast-container" id="toastContainer"></div>
+<div class="app-wrapper" id="app">
+  <header class="brand-header">
+    <a href="#" class="brand" id="brandLink">
+      <div class="brand-icon"><span style="font-size:18px;">👁️</span><span class="badge"></span></div>
+      <div class="brand-text"><span class="main">THE 3RD EYE</span><span class="sub">· <span>PREMIUM</span> ACCESS ·</span></div>
+    </a>
+    <div class="header-actions" id="headerActions"></div>
+  </header>
+  <main id="pageContent" style="flex:1;padding-top:20px;position:relative;z-index:1;"></main>
+  <footer class="app-footer">
+    <span>◆ THE 3RD EYE · BIOS CHEATS Authorization System <span style="color:#fff;">v3.1</span></span>
+    <span style="margin:0 6px;">·</span>
+    <span>👁️ <span style="color:#fff;">2026</span></span>
+    <span style="margin-left:12px;">
+      <button class="btn btn-outline btn-xs" onclick="window._clearData()">🧹 Clear Data</button>
+    </span>
+  </footer>
+</div>
+<script>
+(function(){
+  'use strict';
+
+  // ============ পার্টিকেল (প্রিমিয়াম) ============
+  (function initParticles(){
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    const cursorGlow = document.getElementById('cursorGlow');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let w,h, particles=[];
+    const mouse={x:-9999,y:-9999};
+    let t=0;
+    const palette=['139,92,246','34,211,238','192,132,252','255,255,255'];
+
+    function resize(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; }
+    function makeParticles(){
+      const count = window.innerWidth<700 ? 26 : 55;
+      particles = Array.from({length:count},()=>({
+        x:Math.random()*w,y:Math.random()*h,
+        vx:(Math.random()-0.5)*0.28,vy:(Math.random()-0.5)*0.28,
+        r:Math.random()*1.6+0.5,tw:Math.random()*Math.PI*2,
+        c:palette[Math.floor(Math.random()*palette.length)],
+        depth:Math.random()*0.6+0.4
+      }));
+    }
+    window.addEventListener('mousemove',e=>{
+      mouse.x=e.clientX; mouse.y=e.clientY;
+      if(cursorGlow){
+        cursorGlow.style.opacity='1';
+        cursorGlow.style.transform=`translate(${e.clientX}px, ${e.clientY}px)`;
+      }
+    });
+    window.addEventListener('mouseleave',()=>{ mouse.x=-9999; mouse.y=-9999; if(cursorGlow) cursorGlow.style.opacity='0'; });
+
+    if(reduceMotion){
+      resize();
+      return; // respect reduced-motion: static, no canvas animation
+    }
+
+    let last=0;
+    function step(now){
+      requestAnimationFrame(step);
+      if(now-last<33) return; // ~30fps
+      last=now; t+=0.03;
+      ctx.clearRect(0,0,w,h);
+
+      // connecting lines between nearby particles for a constellation feel
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a=particles[i], b=particles[j];
+          const dx=a.x-b.x, dy=a.y-b.y;
+          const d=Math.sqrt(dx*dx+dy*dy);
+          if(d<110){
+            ctx.globalAlpha=(1-d/110)*0.12;
+            ctx.strokeStyle='rgba(139,92,246,0.6)';
+            ctx.lineWidth=0.6;
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+      }
+
+      for(const p of particles){
+        const dx=p.x-mouse.x, dy=p.y-mouse.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<110 && dist>0.01){
+          const force=(110-dist)/110;
+          p.x += (dx/dist)*force*1.3;
+          p.y += (dy/dist)*force*1.3;
+        }
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>w) p.vx*=-1;
+        if(p.y<0||p.y>h) p.vy*=-1;
+        const alpha=(0.25+0.3*Math.sin(t*1.2+p.tw))*p.depth;
+        ctx.globalAlpha=Math.max(0,alpha);
+        ctx.fillStyle=`rgb(${p.c})`;
+        ctx.shadowColor=`rgb(${p.c})`;
+        ctx.shadowBlur=6*p.depth;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+      }
+      ctx.shadowBlur=0;
+      ctx.globalAlpha=1;
+    }
+    resize(); makeParticles();
+    window.addEventListener('resize',()=>{ resize(); makeParticles(); });
+    requestAnimationFrame(step);
+  })();
+
+  // ============ টোস্ট, API, স্টেট ============
+  const STATE={user:null,token:null,page:'dashboard'};
+  const $=s=>document.querySelector(s);
+  const $$=s=>document.querySelectorAll(s);
+  const pageContent=$('#pageContent');
+  const headerActions=$('#headerActions');
+  const toastContainer=$('#toastContainer');
+
+  function showToast(msg,type='info',duration=4000){
+    const icons={error:'✕',success:'✓',info:'◆'};
+    const el=document.createElement('div');
+    el.className=`toast ${type}`;
+    el.innerHTML=`<span>${icons[type]||'◆'}</span><span>${msg}</span><span class="toast-bar" style="animation-duration:${duration}ms;"></span>`;
+    toastContainer.appendChild(el);
+    setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateX(30px)'; el.style.transition='0.3s ease'; setTimeout(()=>el.remove(),400); },duration);
+  }
+
+  // ক্লিক সাউন্ড (হালকা)
+  let _audioCtx=null;
+  function getAudioCtx(){ if(!_audioCtx){ const Ctx=window.AudioContext||window.webkitAudioContext; if(Ctx) _audioCtx=new Ctx(); } return _audioCtx; }
+  function playClickSound(){
+    try{
+      const ctx=getAudioCtx(); if(!ctx) return;
+      if(ctx.state==='suspended') ctx.resume();
+      const now=ctx.currentTime;
+      const osc=ctx.createOscillator();
+      const gain=ctx.createGain();
+      osc.type='square';
+      osc.frequency.setValueAtTime(880,now);
+      osc.frequency.exponentialRampToValueAtTime(160,now+0.08);
+      gain.gain.setValueAtTime(0.07,now);
+      gain.gain.exponentialRampToValueAtTime(0.0001,now+0.1);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(now); osc.stop(now+0.1);
+    }catch(e){}
+  }
+  document.addEventListener('click',e=>{ const btn=e.target.closest('.btn'); if(!btn||btn.disabled) return; playClickSound(); });
+  ['click','keydown','touchstart'].forEach(evt=>document.addEventListener(evt,()=>getAudioCtx(),{once:true}));
+
+  window._copyText=function(text,btnEl){
+    if(!navigator.clipboard){ showToast('Clipboard not supported.','error'); return; }
+    navigator.clipboard.writeText(text).then(()=>{
+      showToast('Copied!','success',1500);
+      if(btnEl){ const orig=btnEl.innerHTML; btnEl.innerHTML='<i class="fas fa-check"></i>'; setTimeout(()=>{ btnEl.innerHTML=orig; },1000); }
+    }).catch(()=>showToast('Copy failed.','error'));
+  };
+
+  async function apiCall(endpoint,method='GET',body=null,token=null){
+    const headers={'Content-Type':'application/json'};
+    if(token) headers['Authorization']=`Bearer ${token}`;
+    const opts={method,headers};
+    if(body) opts.body=JSON.stringify(body);
+    try{
+      const res=await fetch(endpoint,opts);
+      let data; try{ data=await res.json(); }catch{ data={success:false,message:'Invalid response'}; }
+      if(res.status===401 && STATE.token){ setToken(null); setUser(null); STATE.user=null; showToast(data.message||'Session expired. Please login again.','error'); navigate('login'); }
+      if(!res.ok && data.success===undefined) data.success=false;
+      return data;
+    }catch(e){ console.error(e); return {success:false,message:'Network error.'}; }
+  }
+
+  function getToken(){ return localStorage.getItem('redkey_token'); }
+  function setToken(t){ if(t){ localStorage.setItem('redkey_token',t); STATE.token=t; } else { localStorage.removeItem('redkey_token'); STATE.token=null; } }
+  function getUser(){ try{ const d=localStorage.getItem('redkey_user'); return d?JSON.parse(d):null; }catch{ return null; } }
+  function setUser(u){ if(u){ localStorage.setItem('redkey_user',JSON.stringify(u)); STATE.user=u; } else { localStorage.removeItem('redkey_user'); STATE.user=null; } }
+  function isLoggedIn(){ return !!getToken() && !!getUser(); }
+  function getRole(){ return (STATE.user&&STATE.user.role)||'guest'; }
+  function isActive(u){ return !!u && u.premiumStatus==='active'; }
+
+  function formatTimeLeft(expiresAt){
+    if(!expiresAt) return {percent:100,big:'∞',small:'LIFETIME',expired:false};
+    const diff=expiresAt-Date.now();
+    if(diff<=0) return {percent:0,big:'0',small:'EXPIRED',expired:true};
+    const days=Math.floor(diff/86400000);
+    const hours=Math.floor((diff%86400000)/3600000);
+    const pct=Math.max(3,Math.min(100,(diff/(30*86400000))*100));
+    return {percent:pct,big:days>0?String(days):String(hours),small:days>0?'DAYS LEFT':'HOURS LEFT',expired:false};
+  }
+
+  function licenseRingSVG(info){
+    const r=46,c=2*Math.PI*r;
+    const off=c-(info.percent/100)*c;
+    return `<svg width="110" height="110" viewBox="0 0 110 110"><defs><linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs><circle cx="55" cy="55" r="${r}" class="ring-bg"/><circle cx="55" cy="55" r="${r}" class="ring-fg" style="stroke-dasharray:${c.toFixed(1)};stroke-dashoffset:${off.toFixed(1)};"/></svg><div class="ring-center"><div class="big">${info.big}</div><div class="small">${info.small}</div></div>`;
+  }
+
+  const hudCorners=`<span class="hud-corner tl"></span><span class="hud-corner tr"></span><span class="hud-corner bl"></span><span class="hud-corner br"></span>`;
+
+  function navigate(page,data=null){
+    STATE.page=page;
+    renderHeader();
+    renderPage(page,data);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  window._clearData=function(){
+    if(confirm('⚠️ Clear all local data and logout?')){ localStorage.clear(); showToast('Data cleared. Reloading...','info'); setTimeout(()=>location.reload(),500); }
+  };
+
+  function renderHeader(){
+    const user=STATE.user,token=STATE.token;
+    if(!token||!user){
+      headerActions.innerHTML=`<button class="btn btn-outline btn-sm" onclick="window._navigate('login')"><i class="fas fa-sign-in-alt"></i> Login</button><button class="btn btn-primary btn-sm" onclick="window._navigate('register')"><i class="fas fa-user-plus"></i> Register</button>`;
+      return;
+    }
+    const roleLabel=user.role==='admin'?'👑 Admin':user.role==='reseller'?'🔄 Reseller':`👤 ${user.username}`;
+    headerActions.innerHTML=`<span style="font-size:11px;color:var(--text-muted);">${roleLabel}${user.provider?' · '+user.provider:''}</span><button class="btn btn-danger btn-sm" onclick="window._logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>`;
+  }
+
+  function renderPage(page,data){
+    switch(page){
+      case 'login': renderLogin(); break;
+      case 'register': renderRegister(); break;
+      case 'dashboard': renderDashboard(); break;
+      case 'admin': renderAdmin(); break;
+      case 'reseller': renderReseller(); break;
+      default: renderDashboard();
+    }
+  }
+
+  // ============ লগইন ============
+  function renderLogin(){
+    pageContent.innerHTML=`
+      <div class="auth-container page-enter">
+        <div class="card" style="position:relative;">
+          ${hudCorners}
+          <div class="brand-center">
+            <div class="brand-icon" style="margin:0 auto 14px;width:64px;height:64px;font-size:26px;"><span>👁️</span><span class="badge"></span></div>
+            <h2>THE 3RD EYE</h2>
+            <p style="color:var(--text-muted);font-size:12px;letter-spacing:0.3px;margin-top:2px;">BIOS CHEATS AUTHENTICATION</p>
+          </div>
+          <form id="loginForm" onsubmit="return false;">
+            <div class="form-group"><label>Username or Email</label><div class="input-icon-group"><input class="form-control" id="loginUsername" placeholder="Enter your username" required/><i class="fas fa-user"></i></div></div>
+            <div class="form-group"><label>Password</label><div class="input-icon-group"><input class="form-control" id="loginPassword" type="password" placeholder="Enter your password" required/><i class="fas fa-lock"></i></div></div>
+            <button class="btn btn-primary btn-block" id="loginBtn" type="submit"><i class="fas fa-unlock"></i> Login</button>
+          </form>
+          <div class="form-footer">Don't have an account? <a href="#" onclick="window._navigate('register');return false;">Create one</a></div>
+        </div>
+      </div>
+    `;
+    const form=$('#loginForm'), btn=$('#loginBtn');
+    form.addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const username=$('#loginUsername').value.trim(), password=$('#loginPassword').value.trim();
+      if(!username||!password){ showToast('Please fill in all fields.','error'); return; }
+      btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Logging in...';
+      try{
+        const res=await apiCall('/api/auth/login','POST',{username,password});
+        if(res.success){
+          setToken(res.token); setUser(res.user); STATE.user=res.user;
+          showToast('Welcome back, '+res.user.username+'!','success');
+          const role=res.user.role||'client';
+          navigate(role==='admin'?'admin':role==='reseller'?'reseller':'dashboard');
+        }else showToast(res.message||'Login failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-unlock"></i> Login'; }
+    });
+  }
+
+  // ============ রেজিস্টার ============
+  function renderRegister(){
+    pageContent.innerHTML=`
+      <div class="auth-container page-enter">
+        <div class="card" style="position:relative;">
+          ${hudCorners}
+          <div class="brand-center">
+            <div class="brand-icon" style="margin:0 auto 14px;width:64px;height:64px;font-size:26px;"><span>👁️</span><span class="badge"></span></div>
+            <h2>Create Account</h2>
+            <p style="color:var(--text-muted);font-size:12px;margin-top:2px;">Join <span style="color:#fff;">THE 3RD EYE</span></p>
+          </div>
+          <form id="registerForm" onsubmit="return false;">
+            <div class="form-group"><label>Username</label><div class="input-icon-group"><input class="form-control" id="regUsername" placeholder="Choose a username" required/><i class="fas fa-user"></i></div></div>
+            <div class="form-group"><label>Email</label><div class="input-icon-group"><input class="form-control" id="regEmail" type="email" placeholder="Your email" required/><i class="fas fa-envelope"></i></div></div>
+            <div class="form-group"><label>Password</label><div class="input-icon-group"><input class="form-control" id="regPassword" type="password" placeholder="Min 6 characters" required/><i class="fas fa-lock"></i></div></div>
+            <button class="btn btn-primary btn-block" id="registerBtn" type="submit"><i class="fas fa-user-plus"></i> Register</button>
+          </form>
+          <div class="form-footer">Already have an account? <a href="#" onclick="window._navigate('login');return false;">Login</a></div>
+        </div>
+      </div>
+    `;
+    const form=$('#registerForm'), btn=$('#registerBtn');
+    form.addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const username=$('#regUsername').value.trim(), email=$('#regEmail').value.trim(), password=$('#regPassword').value.trim();
+      if(!username||!email||!password){ showToast('All fields required.','error'); return; }
+      if(password.length<6){ showToast('Password min 6 characters.','error'); return; }
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast('Valid email required.','error'); return; }
+      btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Creating...';
+      try{
+        const res=await apiCall('/api/auth/register','POST',{username,email,password});
+        if(res.success){ showToast('Account created! Please login.','success'); navigate('login'); }
+        else showToast(res.message||'Registration failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-user-plus"></i> Register'; }
+    });
+  }
+
+  // ============ ড্যাশবোর্ড ============
+  function renderDashboard(){
+    const user=STATE.user;
+    if(!user){ navigate('login'); return; }
+    if(!isActive(user)){ renderLockedDashboard(user); return; }
+    renderActiveDashboard(user);
+  }
+
+  function renderLockedDashboard(user){
+    const expiredMsg=user.premiumStatus==='expired';
+    pageContent.innerHTML=`
+      <div class="lock-screen page-enter">
+        <div class="text-center reveal">
+          <div class="lock-icon-wrap">
+            <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+            <div class="core"><i class="fas fa-lock"></i></div>
+          </div>
+          <h2 style="font-family:'Orbitron',sans-serif;font-size:17px;letter-spacing:0.3px;">${expiredMsg?'License Expired':'Activate Your Access'}</h2>
+          <p style="color:var(--text-muted);font-size:12.5px;margin-top:6px;">
+            ${expiredMsg?'Hi <span style="color:#fff;">'+user.username+'</span> — your license expired. Redeem a new key to reactivate.':'Hi <span style="color:#fff;">'+user.username+'</span> — redeem a premium key with your SID and IP to unlock.'}
+          </p>
+        </div>
+        <div class="card mt-24 reveal" style="position:relative;">
+          ${hudCorners}
+          <div class="card-title"><i class="fas fa-key"></i> Redeem Premium Key</div>
+          <div class="card-sub">Enter your premium key, current IP, and SID.</div>
+          <form id="redeemForm" onsubmit="return false;">
+            <div class="form-group"><label>Premium Key</label><div class="input-icon-group"><input class="form-control" id="redeemKey" placeholder="XXXX-XXXX-XXXX-XXXX" required/><i class="fas fa-key"></i></div></div>
+            <div class="form-group"><label>Your IP</label><div style="display:flex;gap:6px;"><div class="input-icon-group" style="flex:1;"><input class="form-control" id="redeemIp" placeholder="Auto-detect or enter" value="${user.ip||''}" required/><i class="fas fa-network-wired"></i></div><button type="button" class="btn btn-outline btn-sm" id="getIpBtn"><i class="fas fa-location-arrow"></i> Get</button></div></div>
+            <div class="form-group"><label>SID (System ID)</label><div class="input-icon-group"><input class="form-control" id="redeemSid" placeholder="Enter your SID" value="${user.sid||''}" required/><i class="fas fa-fingerprint"></i></div></div>
+            <button class="btn btn-primary btn-block" id="redeemBtn" type="submit"><i class="fas fa-key"></i> Redeem Key</button>
+          </form>
+        </div>
+      </div>
+    `;
+    const getIp=async(targetId)=>{
+      try{ const res=await fetch('https://api.ipify.org?format=json'); const data=await res.json(); const ip=data.ip; if(targetId){ const el=document.getElementById(targetId); if(el){ el.value=ip; el.dispatchEvent(new Event('input')); } showToast('IP detected: '+ip,'success'); } return ip; }catch{ showToast('Could not detect IP. Please enter manually.','error'); return null; }
+    };
+    document.getElementById('getIpBtn')?.addEventListener('click',()=>getIp('redeemIp'));
+    if(!user.ip) getIp('redeemIp');
+
+    document.getElementById('redeemForm').addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const key=$('#redeemKey').value.trim(), ip=$('#redeemIp').value.trim(), sid=$('#redeemSid').value.trim();
+      if(!key||!ip||!sid){ showToast('All fields required.','error'); return; }
+      const btn=$('#redeemBtn');
+      btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Redeeming...';
+      try{
+        const res=await apiCall('/api/client/redeem','POST',{key,ip,sid},getToken());
+        if(res.success){ showToast('✓ Key redeemed! Account activated.','success'); setUser(res.user); STATE.user=res.user; navigate('dashboard'); }
+        else showToast(res.message||'Redeem failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-key"></i> Redeem Key'; }
+    });
+  }
+
+  function renderActiveDashboard(user){
+    const timeInfo=formatTimeLeft(user.expiresAt);
+    pageContent.innerHTML=`
+      <div class="page-enter">
+        <div class="section-title reveal">
+          <h2>👁️ Dashboard · <span class="highlight">${user.username}</span></h2>
+          <span class="badge-status active"><span class="dot"></span> PREMIUM</span>
+        </div>
+        <div class="card dash-hero reveal" style="position:relative;">
+          ${hudCorners}
+          <div class="ring-wrap">${licenseRingSVG(timeInfo)}</div>
+          <div class="dash-hero-info">
+            <div class="provider-name">${user.provider||'Unknown Provider'}</div>
+            <div class="username-line"><i class="fas fa-user-shield"></i> Licensed to ${user.username} ${user.discordId?'· 🎮 '+user.discordId:''}</div>
+            <span class="badge-status active"><span class="dot"></span> ${timeInfo.expired?'EXPIRED':'ACCESS GRANTED'}</span>
+          </div>
+        </div>
+
+        <div class="stat-grid mt-24 reveal">
+          <div class="stat-item"><div class="label">Provider</div><div class="value" style="font-size:14px;font-family:'Space Grotesk';">${user.provider||'—'}</div></div>
+          <div class="stat-item"><button class="copy-mini" title="Copy key" onclick="window._copyText('${(user.premiumKey||'').replace(/'/g,"")}', this)"><i class="fas fa-copy"></i></button><div class="label">Premium Key</div><div class="value" style="font-size:11px;font-family:var(--mono);">${user.premiumKey||'—'}</div></div>
+          <div class="stat-item"><button class="copy-mini" title="Copy SID" onclick="window._copyText('${(user.sid||'').replace(/'/g,"")}', this)"><i class="fas fa-copy"></i></button><div class="label">Current SID</div><div class="value" style="font-size:12px;">${user.sid||'—'}</div></div>
+          <div class="stat-item"><button class="copy-mini" title="Copy IP" onclick="window._copyText('${(user.ip||'').replace(/'/g,"")}', this)"><i class="fas fa-copy"></i></button><div class="label">Current IP</div><div class="value" style="font-size:12px;">${user.ip||'—'}</div></div>
+          <div class="stat-item"><div class="label">Expiry</div><div class="value" style="font-size:12px;color:#fff;">${user.expiresAt?new Date(user.expiresAt).toLocaleDateString():'Lifetime'}</div></div>
+          <div class="stat-item"><div class="label">Discord ID</div><div class="value" style="font-size:12px;">${user.discordId||'—'}</div></div>
+        </div>
+
+        <div class="grid-2 mt-8">
+          <div class="card reveal">
+            <div class="card-title"><i class="fas fa-sliders-h"></i> Update Credentials</div>
+            <div class="card-sub">Update your SID, IP, and Discord ID.</div>
+            <form id="updateForm" onsubmit="return false;">
+              <div class="form-group"><div class="flex-between"><label style="margin:0;">New SID</label><span id="sidCooldownChip"></span></div><div class="input-icon-group"><input class="form-control" id="updateSid" placeholder="Enter new SID"/><i class="fas fa-fingerprint"></i></div></div>
+              <div class="form-group"><label>New IP</label><div class="input-icon-group"><input class="form-control" id="updateIp" placeholder="Enter new IP"/><i class="fas fa-network-wired"></i></div><button type="button" class="btn btn-outline btn-sm mt-8" id="getIpBtn2" style="width:100%;"><i class="fas fa-location-arrow"></i> Auto-detect IP</button></div>
+              <div class="form-group"><label>Discord User ID</label><div class="input-icon-group"><input class="form-control" id="updateDiscord" placeholder="Enter Discord ID" value="${user.discordId||''}"/><i class="fab fa-discord"></i></div></div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button class="btn btn-outline btn-sm" id="updateSidBtn" type="button"><i class="fas fa-sync"></i> Update SID</button>
+                <button class="btn btn-outline btn-sm" id="updateIpBtn" type="button"><i class="fas fa-sync"></i> Update IP</button>
+                <button class="btn btn-outline btn-sm" id="updateDiscordBtn" type="button"><i class="fas fa-id-badge"></i> Update Discord</button>
+              </div>
+            </form>
+          </div>
+          <div class="card reveal">
+            <div class="card-title"><i class="fas fa-plug"></i> API Endpoint</div>
+            <div class="card-sub">Use this endpoint from your client application.</div>
+            <div class="terminal-box">GET /api/verify?sid=${user.sid||'YOUR_SID'}<span class="cursor"></span></div>
+            <div class="flex-between mt-24" style="font-size:11px;color:var(--text-muted);">
+              <span><i class="fas fa-circle" style="color:#fff;font-size:6px;"></i> Online</span>
+              <button class="btn btn-outline btn-xs" onclick="window._copyText('${window.location.origin}/api/verify?sid=${(user.sid||'YOUR_SID').replace(/'/g,"")}', this)"><i class="fas fa-copy"></i> Copy</button>
+            </div>
+            <div class="mt-24" style="border-top:1px solid var(--border);padding-top:14px;">
+              <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:8px;">🔁 Have a new key? Redeem to extend / replace</div>
+              <button class="btn btn-outline btn-sm btn-block" id="showRenewBtn" type="button"><i class="fas fa-key"></i> Redeem Another Key</button>
+              <div class="collapse-panel" id="renewPanel">
+                <form id="renewForm" onsubmit="return false;">
+                  <div class="form-group"><label>Premium Key</label><input class="form-control" id="renewKey" placeholder="XXXX-XXXX-XXXX-XXXX"/></div>
+                  <button class="btn btn-primary btn-block btn-sm" id="renewBtn" type="submit"><i class="fas fa-key"></i> Redeem</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="card mt-24 reveal">
+          <div class="card-title"><i class="fas fa-box"></i> Resources</div>
+          <div class="card-sub">Commands, files, videos, and YouTube links provided by admin.</div>
+          <div id="resourcesContainer"><p style="color:var(--text-muted);font-size:12px;">Loading...</p></div>
+        </div>
+      </div>
+    `;
+
+    // ---- cooldown ----
+    if(window._sidCooldownInterval) clearInterval(window._sidCooldownInterval);
+    function fmtCountdown(ms){ const s=Math.max(0,Math.ceil(ms/1000)); const h=String(Math.floor(s/3600)).padStart(2,'0'); const m=String(Math.floor((s%3600)/60)).padStart(2,'0'); const sec=String(s%60).padStart(2,'0'); return h+':'+m+':'+sec; }
+    function refreshSidCooldownUI(){
+      const chip=document.getElementById('sidCooldownChip'), btn=document.getElementById('updateSidBtn'), inp=document.getElementById('updateSid');
+      if(!chip||!btn||!inp){ clearInterval(window._sidCooldownInterval); return; }
+      const rem=STATE.user.sidCooldownMs||0;
+      if(rem>0){
+        chip.innerHTML=`<span style="font-size:10px;color:var(--text-muted);"><i class="fas fa-clock"></i> ${fmtCountdown(rem)}</span>`;
+        btn.disabled=true; inp.disabled=true; inp.placeholder='Locked — 1 change per 24h';
+        STATE.user.sidCooldownMs=Math.max(0,rem-1000);
+      }else{
+        chip.innerHTML=`<span style="font-size:10px;color:#fff;">Ready</span>`;
+        btn.disabled=false; inp.disabled=false; inp.placeholder='Enter new SID';
+        clearInterval(window._sidCooldownInterval);
+      }
+    }
+    refreshSidCooldownUI();
+    window._sidCooldownInterval=setInterval(refreshSidCooldownUI,1000);
+
+    // ---- update handlers ----
+    document.getElementById('updateSidBtn').addEventListener('click',async()=>{
+      const sid=$('#updateSid').value.trim(); if(!sid){ showToast('Enter new SID.','error'); return; }
+      const btn=$('#updateSidBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/client/update-sid','POST',{sid},getToken());
+        if(res.success){ showToast('✓ SID updated!','success'); setUser(res.user); STATE.user=res.user; renderDashboard(); }
+        else if(res.cooldown){ setUser(res.user); STATE.user=res.user; showToast('⏳ Cooldown: '+fmtCountdown(res.sidCooldownMs),'error'); refreshSidCooldownUI(); }
+        else showToast(res.message||'Failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-sync"></i> Update SID'; }
+    });
+
+    document.getElementById('updateIpBtn').addEventListener('click',async()=>{
+      const ip=$('#updateIp').value.trim(); if(!ip){ showToast('Enter new IP.','error'); return; }
+      const btn=$('#updateIpBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/client/update-ip','POST',{ip},getToken());
+        if(res.success){ showToast('✓ IP updated!','success'); setUser(res.user); STATE.user=res.user; renderDashboard(); }
+        else showToast(res.message||'Failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-sync"></i> Update IP'; }
+    });
+
+    document.getElementById('updateDiscordBtn').addEventListener('click',async()=>{
+      const discord=$('#updateDiscord').value.trim(); if(!discord){ showToast('Enter Discord ID.','error'); return; }
+      const btn=$('#updateDiscordBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/client/update-discord','POST',{discordId:discord},getToken());
+        if(res.success){ showToast('✓ Discord ID updated!','success'); setUser(res.user); STATE.user=res.user; renderDashboard(); }
+        else showToast(res.message||'Failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-id-badge"></i> Update Discord'; }
+    });
+
+    document.getElementById('getIpBtn2')?.addEventListener('click',async()=>{
+      try{ const r=await fetch('https://api.ipify.org?format=json'); const d=await r.json(); const ip=d.ip; if(ip){ document.getElementById('updateIp').value=ip; showToast('IP detected: '+ip,'success'); } }catch{ showToast('Could not detect IP.','error'); }
+    });
+
+    document.getElementById('showRenewBtn').addEventListener('click',()=>{ document.getElementById('renewPanel').classList.toggle('open'); });
+    document.getElementById('renewForm').addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const key=$('#renewKey').value.trim(); if(!key){ showToast('Enter a key.','error'); return; }
+      const btn=$('#renewBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/client/redeem','POST',{key,ip:user.ip,sid:user.sid},getToken());
+        if(res.success){ showToast('✓ Key redeemed!','success'); setUser(res.user); STATE.user=res.user; renderDashboard(); }
+        else showToast(res.message||'Redeem failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-key"></i> Redeem'; }
+    });
+
+    // ---- load resources ----
+    loadResources();
+
+    // ---- check announcements ----
+    checkAnnouncements();
+  }
+
+  // ============ Announcements ============
+  async function checkAnnouncements(){
+    try{
+      const res=await apiCall('/api/client/announcements','GET',null,getToken());
+      if(res.success && res.announcements && res.announcements.length>0){
+        showAnnouncementModal(res.announcements[0]);
+      }
+    }catch(e){}
+  }
+
+  function showAnnouncementModal(a){
+    const urgencyIcon={critical:'fa-triangle-exclamation',warning:'fa-circle-exclamation'}[a.urgency]||'fa-bullhorn';
+    const overlay=document.createElement('div');
+    overlay.className='modal-overlay';
+    overlay.innerHTML=`
+      <div class="modal-box">
+        <div class="modal-icon"><i class="fas ${urgencyIcon}"></i></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+          <h3>${a.title}</h3>
+          <span class="modal-urgency ${a.urgency==='critical'?'critical':a.urgency==='warning'?'warning':''}">${a.urgency||'info'}</span>
+        </div>
+        <div class="modal-msg">${a.message}</div>
+        <button class="btn btn-primary btn-block" id="ackBtn"><i class="fas fa-check"></i> Acknowledge</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    const closeModal=()=>{
+      const box=overlay.querySelector('.modal-box');
+      box.classList.add('closing');
+      overlay.style.transition='opacity 0.25s ease';
+      overlay.style.opacity='0';
+      setTimeout(()=>overlay.remove(),250);
+    };
+    overlay.querySelector('#ackBtn').addEventListener('click',async()=>{
+      const btn=overlay.querySelector('#ackBtn');
+      btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Acknowledging...';
+      try{
+        await apiCall('/api/client/acknowledge-announcement','POST',{announcementId:a.id},getToken());
+      }catch(e){}
+      closeModal();
+      setTimeout(checkAnnouncements,260);
+    });
+  }
+
+  // ============ Resources ============
+  async function loadResources(){
+    const container=document.getElementById('resourcesContainer');
+    if(!container) return;
+    try{
+      const res=await apiCall('/api/client/resources','GET',null,getToken());
+      if(res.success && res.resources && res.resources.length>0){
+        let html='<div class="resource-grid">';
+        for(const r of res.resources){
+          const iconMap={command:'fa-terminal',file:'fa-file',video:'fa-video',youtube:'fa-youtube'};
+          const icon=iconMap[r.type]||'fa-box';
+          let contentHtml=r.content;
+          if(r.type==='youtube' || r.type==='video'){
+            contentHtml=`<a href="${r.content}" target="_blank">${r.content}</a>`;
+          }else if(r.type==='command'){
+            contentHtml=`<span style="font-family:var(--mono);font-size:11px;background:rgba(255,255,255,0.04);padding:2px 6px;border-radius:4px;display:inline-block;">${r.content}</span>
+                         <button class="btn btn-outline btn-xs" style="margin-left:6px;" onclick="window._copyText('${r.content.replace(/'/g,"")}', this)"><i class="fas fa-copy"></i></button>`;
+          }else if(r.type==='file'){
+            contentHtml=`<a href="${r.content}" target="_blank">Download</a>`;
+          }
+          html+=`<div class="resource-card"><div><i class="fas ${icon} r-icon"></i><span class="r-title">${r.title}</span></div><div class="r-content">${contentHtml}</div></div>`;
+        }
+        html+='</div>';
+        container.innerHTML=html;
+      }else{
+        container.innerHTML='<p style="color:var(--text-muted);font-size:12px;">No resources available.</p>';
+      }
+    }catch(e){ container.innerHTML='<p style="color:var(--text-muted);font-size:12px;">Failed to load resources.</p>'; }
+  }
+
+  // ============ অ্যাডমিন ============
+  function renderAdmin(){
+    const user=STATE.user;
+    if(!user||user.role!=='admin'){ navigate('dashboard'); return; }
+    pageContent.innerHTML=`
+      <div class="page-enter">
+        <div class="section-title reveal"><h2>👑 Admin Panel · <span class="highlight">${user.username}</span></h2><span style="font-size:12px;color:var(--text-muted);">Manage keys, resellers, users, announcements & resources</span></div>
+        <div class="tabs reveal" id="adminTabs">
+          <button class="tab-btn active" data-tab="admin-keys">🔑 Keys</button>
+          <button class="tab-btn" data-tab="admin-resellers">🔄 Resellers</button>
+          <button class="tab-btn" data-tab="admin-users">👤 Users</button>
+          <button class="tab-btn" data-tab="admin-create">➕ Create</button>
+          <button class="tab-btn" data-tab="admin-announcements">📢 Announce</button>
+          <button class="tab-btn" data-tab="admin-resources">📦 Resources</button>
+        </div>
+        <div id="adminTabContent" class="reveal">
+          <div class="tab-pane active" id="admin-keys">${adminKeysPane()}</div>
+          <div class="tab-pane" id="admin-resellers">${adminResellersPane()}</div>
+          <div class="tab-pane" id="admin-users">${adminUsersPane()}</div>
+          <div class="tab-pane" id="admin-create">${adminCreatePane()}</div>
+          <div class="tab-pane" id="admin-announcements">${adminAnnouncementsPane()}</div>
+          <div class="tab-pane" id="admin-resources">${adminResourcesPane()}</div>
+        </div>
+      </div>
+    `;
+
+    const tabBtns=$$('#adminTabs .tab-btn');
+    tabBtns.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        tabBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const target=btn.dataset.tab;
+        $$('#adminTabContent .tab-pane').forEach(p=>p.classList.remove('active'));
+        const pane=document.getElementById(target); if(pane) pane.classList.add('active');
+        if(target==='admin-keys') loadAdminKeys();
+        if(target==='admin-resellers') loadAdminResellers();
+        if(target==='admin-users') loadAdminUsers();
+        if(target==='admin-announcements') loadAdminAnnouncements();
+        if(target==='admin-resources') loadAdminResources();
+      });
+    });
+
+    loadAdminKeys(); loadAdminResellers(); loadAdminUsers(); loadAdminAnnouncements(); loadAdminResources();
+
+    // create key form
+    document.getElementById('adminCreateKeyForm').addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const provider=$('#adminKeyProvider').value.trim(), duration=$('#adminKeyDuration').value;
+      if(!provider){ showToast('Provider name required.','error'); return; }
+      const btn=$('#adminCreateKeyBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/admin/create-key','POST',{provider,duration},getToken());
+        if(res.success){ showToast('✓ Key created: '+res.key,'success'); loadAdminKeys(); $('#adminKeyProvider').value=''; }
+        else showToast(res.message||'Failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-plus-circle"></i> Generate Key'; }
+    });
+
+    // create reseller
+    document.getElementById('adminCreateResellerForm').addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const username=$('#adminResellerUser').value.trim(), password=$('#adminResellerPass').value.trim(), provider=$('#adminResellerProvider').value.trim();
+      if(!username||!password||!provider){ showToast('All fields required.','error'); return; }
+      if(password.length<6){ showToast('Password min 6 chars.','error'); return; }
+      const btn=$('#adminCreateResellerBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/admin/create-reseller','POST',{username,password,provider},getToken());
+        if(res.success){ showToast('✓ Reseller created!','success'); loadAdminResellers(); $('#adminResellerUser').value=''; $('#adminResellerPass').value=''; $('#adminResellerProvider').value=''; }
+        else showToast(res.message||'Failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-user-plus"></i> Create Reseller'; }
+    });
+
+    // announcement form
+    document.getElementById('adminCreateAnnouncementForm').addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const title=$('#adminAnnounceTitle').value.trim(), msg=$('#adminAnnounceMsg').value.trim(), urgency=$('#adminAnnounceUrgency').value;
+      if(!title||!msg){ showToast('Title and message required.','error'); return; }
+      const btn=$('#adminCreateAnnounceBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/admin/announcement','POST',{title,message:msg,urgency},getToken());
+        if(res.success){ showToast('✓ Announcement published!','success'); loadAdminAnnouncements(); $('#adminAnnounceTitle').value=''; $('#adminAnnounceMsg').value=''; }
+        else showToast(res.message||'Failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-bullhorn"></i> Publish'; }
+    });
+
+    // resource form
+    document.getElementById('adminCreateResourceForm').addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const type=$('#adminResourceType').value, title=$('#adminResourceTitle').value.trim(), content=$('#adminResourceContent').value.trim();
+      if(!type||!title||!content){ showToast('All fields required.','error'); return; }
+      const btn=$('#adminCreateResourceBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/admin/resource','POST',{type,title,content},getToken());
+        if(res.success){ showToast('✓ Resource added!','success'); loadAdminResources(); $('#adminResourceTitle').value=''; $('#adminResourceContent').value=''; }
+        else showToast(res.message||'Failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-plus-circle"></i> Add Resource'; }
+    });
+  }
+
+  function adminKeysPane(){ return `<div class="card"><div class="flex-between wrap"><span class="card-title" style="margin:0;"><i class="fas fa-key"></i> All Premium Keys</span><button class="btn btn-sm btn-outline" onclick="window._adminRefreshKeys()"><i class="fas fa-sync"></i> Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Key</th><th>Provider</th><th>Duration</th><th>Used By</th><th>Status</th><th>Active</th><th>Actions</th></tr></thead><tbody id="adminKeysBody"><tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Loading...</td></tr></tbody></table></div></div>`; }
+  function adminResellersPane(){ return `<div class="card"><span class="card-title"><i class="fas fa-exchange-alt"></i> Reseller Accounts</span><div class="table-wrap"><table><thead><tr><th>Username</th><th>Provider</th><th>Created</th><th>Active</th><th>Actions</th></tr></thead><tbody id="adminResellersBody"><tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr></tbody></table></div></div>`; }
+  function adminUsersPane(){ return `<div class="card"><span class="card-title"><i class="fas fa-users"></i> Registered Users</span><div class="table-wrap"><table><thead><tr><th>Username</th><th>Email</th><th>Provider</th><th>Status</th><th>Key</th><th>Active</th><th>Actions</th></tr></thead><tbody id="adminUsersBody"><tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Loading...</td></tr></tbody></table></div></div>`; }
+  function adminCreatePane(){
+    return `<div class="grid-2"><div class="card"><span class="card-title"><i class="fas fa-key"></i> Create Premium Key</span><form id="adminCreateKeyForm" onsubmit="return false;"><div class="form-group"><label>Provider Name</label><input class="form-control" id="adminKeyProvider" placeholder="e.g. BIOS CHEATS PREMIUM"/></div><div class="form-group"><label>Duration</label><select class="form-control" id="adminKeyDuration"><option value="1">1 Day</option><option value="3">3 Days</option><option value="7">7 Days</option><option value="30">1 Month</option><option value="lifetime">Lifetime</option></select></div><button class="btn btn-primary btn-block" id="adminCreateKeyBtn" type="submit"><i class="fas fa-plus-circle"></i> Generate Key</button></form></div><div class="card"><span class="card-title"><i class="fas fa-user-plus"></i> Create Reseller</span><form id="adminCreateResellerForm" onsubmit="return false;"><div class="form-group"><label>Username</label><input class="form-control" id="adminResellerUser" placeholder="Reseller username"/></div><div class="form-group"><label>Password</label><input class="form-control" id="adminResellerPass" type="password" placeholder="Password"/></div><div class="form-group"><label>Provider Name</label><input class="form-control" id="adminResellerProvider" placeholder="Provider name"/></div><button class="btn btn-primary btn-block" id="adminCreateResellerBtn" type="submit"><i class="fas fa-user-plus"></i> Create Reseller</button></form></div></div>`;
+  }
+  function adminAnnouncementsPane(){
+    return `<div class="card"><span class="card-title"><i class="fas fa-bullhorn"></i> Announcements</span><div style="margin-bottom:16px;"><form id="adminCreateAnnouncementForm" onsubmit="return false;"><div class="form-group"><label>Title</label><input class="form-control" id="adminAnnounceTitle" placeholder="Announcement title"/></div><div class="form-group"><label>Message</label><textarea class="form-control" id="adminAnnounceMsg" rows="2" placeholder="Message content"></textarea></div><div class="form-group"><label>Urgency</label><select class="form-control" id="adminAnnounceUrgency"><option value="info">Info</option><option value="warning">Warning</option><option value="critical">Critical</option></select></div><button class="btn btn-primary" id="adminCreateAnnounceBtn" type="submit"><i class="fas fa-bullhorn"></i> Publish</button></form></div><div class="table-wrap"><table><thead><tr><th>Title</th><th>Message</th><th>Urgency</th><th>Created</th><th>Actions</th></tr></thead><tbody id="adminAnnounceBody"><tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr></tbody></table></div></div>`;
+  }
+  function adminResourcesPane(){
+    return `<div class="card"><span class="card-title"><i class="fas fa-box"></i> Resources</span><div style="margin-bottom:16px;"><form id="adminCreateResourceForm" onsubmit="return false;"><div class="form-group"><label>Type</label><select class="form-control" id="adminResourceType"><option value="command">Command</option><option value="file">File</option><option value="video">Video</option><option value="youtube">YouTube</option></select></div><div class="form-group"><label>Title</label><input class="form-control" id="adminResourceTitle" placeholder="Resource title"/></div><div class="form-group"><label>Content / URL</label><input class="form-control" id="adminResourceContent" placeholder="Command or link"/></div><button class="btn btn-primary" id="adminCreateResourceBtn" type="submit"><i class="fas fa-plus-circle"></i> Add Resource</button></form></div><div class="table-wrap"><table><thead><tr><th>Type</th><th>Title</th><th>Content</th><th>Actions</th></tr></thead><tbody id="adminResourcesBody"><tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Loading...</td></tr></tbody></table></div></div>`;
+  }
+
+  // ============ অ্যাডমিন লোড ============
+  async function loadAdminKeys(){
+    const tbody=document.getElementById('adminKeysBody'); if(!tbody) return;
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>';
+    try{
+      const res=await apiCall('/api/admin/keys','GET',null,getToken());
+      if(res.success&&res.keys){
+        if(res.keys.length===0){ tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">No keys found.</td></tr>'; return; }
+        tbody.innerHTML=res.keys.map(k=>`<tr><td class="key-cell">${k.key}</td><td>${k.provider||'—'}</td><td>${k.duration}</td><td>${k.usedBy||'—'}</td><td>${k.isUsed?'✓ Used':'● Available'}</td><td>${k.active!==false?'● Active':'○ Banned'}</td><td><button class="btn btn-sm ${k.active!==false?'btn-danger':'btn-success'}" onclick="window._toggleKeyActive('${k.key}')">${k.active!==false?'Ban':'Unban'}</button><button class="btn btn-sm btn-danger" onclick="window._deleteKey('${k.key}')">Delete</button></td></tr>`).join('');
+      }else tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Failed to load.</td></tr>';
+    }catch{ tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Error loading.</td></tr>'; }
+  }
+
+  window._toggleKeyActive=async function(key){
+    try{
+      const res=await apiCall('/api/admin/toggle-key-active','POST',{key},getToken());
+      if(res.success){ showToast(res.message,'success'); loadAdminKeys(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+  window._deleteKey=async function(key){
+    if(!confirm(`Delete key "${key}"? This will also delete the bound user account.`)) return;
+    try{
+      const res=await apiCall('/api/admin/delete-key','DELETE',{key},getToken());
+      if(res.success){ showToast('Key and bound user deleted.','success'); loadAdminKeys(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+
+  async function loadAdminResellers(){
+    const tbody=document.getElementById('adminResellersBody'); if(!tbody) return;
+    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>';
+    try{
+      const res=await apiCall('/api/admin/resellers','GET',null,getToken());
+      if(res.success&&res.resellers){
+        if(res.resellers.length===0){ tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">No resellers.</td></tr>'; return; }
+        tbody.innerHTML=res.resellers.map(r=>`<tr><td>${r.username}</td><td>${r.provider||'—'}</td><td style="font-size:10px;color:var(--text-muted);">${new Date(r.createdAt).toLocaleDateString()}</td><td>${r.active!==false?'● Active':'○ Banned'}</td><td><button class="btn btn-sm ${r.active!==false?'btn-danger':'btn-success'}" onclick="window._toggleResellerActive('${r.username}')">${r.active!==false?'Ban':'Unban'}</button><button class="btn btn-sm btn-danger" onclick="window._deleteReseller('${r.username}')">Delete</button></td></tr>`).join('');
+      }else tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Failed to load.</td></tr>';
+    }catch{ tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Error loading.</td></tr>'; }
+  }
+  window._toggleResellerActive=async function(username){
+    try{
+      const res=await apiCall('/api/admin/toggle-reseller-active','POST',{username},getToken());
+      if(res.success){ showToast(res.message,'success'); loadAdminResellers(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+  window._deleteReseller=async function(username){
+    if(!confirm(`Delete reseller "${username}"?`)) return;
+    try{
+      const res=await apiCall('/api/admin/delete-reseller','DELETE',{username},getToken());
+      if(res.success){ showToast('Reseller deleted.','success'); loadAdminResellers(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+
+  async function loadAdminUsers(){
+    const tbody=document.getElementById('adminUsersBody'); if(!tbody) return;
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>';
+    try{
+      const res=await apiCall('/api/admin/users','GET',null,getToken());
+      if(res.success&&res.users){
+        if(res.users.length===0){ tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">No users.</td></tr>'; return; }
+        tbody.innerHTML=res.users.map(u=>`<tr><td>${u.username}</td><td>${u.email||'—'}</td><td>${u.provider||'—'}</td><td>${u.premiumStatus==='active'?'● Active':u.premiumStatus==='expired'?'◐ Expired':'○ Inactive'}</td><td style="font-size:10px;font-family:monospace;">${u.premiumKey||'—'}</td><td>${u.active!==false?'● Active':'○ Banned'}</td><td>${u.role==='admin'?'—':`<button class="btn btn-sm ${u.active!==false?'btn-danger':'btn-success'}" onclick="window._toggleUserActive('${u.username}')">${u.active!==false?'Ban':'Unban'}</button>`}</td></tr>`).join('');
+      }else tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Failed to load.</td></tr>';
+    }catch{ tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Error loading.</td></tr>'; }
+  }
+  window._toggleUserActive=async function(username){
+    try{
+      const res=await apiCall('/api/admin/toggle-user-active','POST',{username},getToken());
+      if(res.success){ showToast(res.message,'success'); loadAdminUsers(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+
+  window._adminRefreshKeys=loadAdminKeys;
+
+  // ============ অ্যাডমিন অ্যানাউন্সমেন্ট ও রিসোর্স ============
+  async function loadAdminAnnouncements(){
+    const tbody=document.getElementById('adminAnnounceBody'); if(!tbody) return;
+    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>';
+    try{
+      const res=await apiCall('/api/admin/announcements','GET',null,getToken());
+      if(res.success&&res.announcements){
+        if(res.announcements.length===0){ tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">No announcements.</td></tr>'; return; }
+        tbody.innerHTML=res.announcements.map(a=>`<tr><td>${a.title}</td><td>${a.message}</td><td><span style="color:${a.urgency==='critical'?'#fff':'var(--text-muted)'};">${a.urgency||'info'}</span></td><td style="font-size:10px;color:var(--text-muted);">${new Date(a.createdAt).toLocaleDateString()}</td><td><button class="btn btn-sm btn-danger" onclick="window._deleteAnnouncement('${a.id}')">Delete</button></td></tr>`).join('');
+      }else tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Failed to load.</td></tr>';
+    }catch{ tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Error loading.</td></tr>'; }
+  }
+  window._deleteAnnouncement=async function(id){
+    if(!confirm('Delete this announcement?')) return;
+    try{
+      const res=await apiCall(`/api/admin/announcement/${id}`,'DELETE',null,getToken());
+      if(res.success){ showToast('Deleted.','success'); loadAdminAnnouncements(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+
+  async function loadAdminResources(){
+    const tbody=document.getElementById('adminResourcesBody'); if(!tbody) return;
+    tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>';
+    try{
+      const res=await apiCall('/api/admin/resources','GET',null,getToken());
+      if(res.success&&res.resources){
+        if(res.resources.length===0){ tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">No resources.</td></tr>'; return; }
+        tbody.innerHTML=res.resources.map(r=>`<tr><td>${r.type}</td><td>${r.title}</td><td style="font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.content}</td><td><button class="btn btn-sm btn-danger" onclick="window._deleteResource('${r.id}')">Delete</button></td></tr>`).join('');
+      }else tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Failed to load.</td></tr>';
+    }catch{ tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Error loading.</td></tr>'; }
+  }
+  window._deleteResource=async function(id){
+    if(!confirm('Delete this resource?')) return;
+    try{
+      const res=await apiCall(`/api/admin/resource/${id}`,'DELETE',null,getToken());
+      if(res.success){ showToast('Deleted.','success'); loadAdminResources(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+
+  // ============ রিসেলার ============
+  function renderReseller(){
+    const user=STATE.user;
+    if(!user||user.role!=='reseller'){ navigate('dashboard'); return; }
+    pageContent.innerHTML=`
+      <div class="page-enter">
+        <div class="section-title reveal"><h2>🔄 Reseller Panel · <span class="highlight">${user.username}</span></h2><span style="font-size:12px;color:var(--text-muted);">Provider: ${user.provider||'—'}</span></div>
+        <div class="tabs reveal" id="resellerTabs">
+          <button class="tab-btn active" data-tab="reseller-keys">🔑 My Keys</button>
+          <button class="tab-btn" data-tab="reseller-clients">👤 My Clients</button>
+          <button class="tab-btn" data-tab="reseller-create">➕ Create Key</button>
+        </div>
+        <div id="resellerTabContent" class="reveal">
+          <div class="tab-pane active" id="reseller-keys">${resellerKeysPane()}</div>
+          <div class="tab-pane" id="reseller-clients">${resellerClientsPane()}</div>
+          <div class="tab-pane" id="reseller-create">${resellerCreatePane()}</div>
+        </div>
+      </div>
+    `;
+    const tabBtns=$$('#resellerTabs .tab-btn');
+    tabBtns.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        tabBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const target=btn.dataset.tab;
+        $$('#resellerTabContent .tab-pane').forEach(p=>p.classList.remove('active'));
+        const pane=document.getElementById(target); if(pane) pane.classList.add('active');
+        if(target==='reseller-keys') loadResellerKeys();
+        if(target==='reseller-clients') loadResellerClients();
+      });
+    });
+    loadResellerKeys();
+
+    document.getElementById('resellerCreateKeyForm').addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const duration=$('#resellerKeyDuration').value;
+      const btn=$('#resellerCreateKeyBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+      try{
+        const res=await apiCall('/api/reseller/create-key','POST',{duration},getToken());
+        if(res.success){ showToast('✓ Key created: '+res.key,'success'); loadResellerKeys(); }
+        else showToast(res.message||'Failed.','error');
+      }catch(err){ showToast('Error: '+err.message,'error'); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-plus-circle"></i> Generate Key'; }
+    });
+  }
+
+  function resellerKeysPane(){ return `<div class="card"><div class="flex-between wrap"><span class="card-title" style="margin:0;"><i class="fas fa-key"></i> Keys I Created</span><button class="btn btn-sm btn-outline" onclick="window._resellerRefreshKeys()"><i class="fas fa-sync"></i> Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Key</th><th>Duration</th><th>Used</th><th>Active</th><th>Created</th><th>Actions</th></tr></thead><tbody id="resellerKeysBody"><tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr></tbody></table></div></div>`; }
+  function resellerClientsPane(){ return `<div class="card"><div class="flex-between wrap"><span class="card-title" style="margin:0;"><i class="fas fa-users"></i> Clients Under My Provider</span><button class="btn btn-sm btn-outline" onclick="window._resellerRefreshClients()"><i class="fas fa-sync"></i> Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Username</th><th>Email</th><th>Status</th><th>SID</th><th>Active</th><th>Actions</th></tr></thead><tbody id="resellerClientsBody"><tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr></tbody></table></div></div>`; }
+  function resellerCreatePane(){ return `<div class="card" style="max-width:460px;"><span class="card-title"><i class="fas fa-key"></i> Create Reseller Key</span><form id="resellerCreateKeyForm" onsubmit="return false;"><div class="form-group"><label>Duration</label><select class="form-control" id="resellerKeyDuration"><option value="1">1 Day</option><option value="3">3 Days</option><option value="7">7 Days</option><option value="30">1 Month</option><option value="lifetime">Lifetime</option></select></div><button class="btn btn-primary btn-block" id="resellerCreateKeyBtn" type="submit"><i class="fas fa-plus-circle"></i> Generate Key</button></form></div>`; }
+
+  async function loadResellerKeys(){
+    const tbody=document.getElementById('resellerKeysBody'); if(!tbody) return;
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>';
+    try{
+      const res=await apiCall('/api/reseller/keys','GET',null,getToken());
+      if(res.success&&res.keys){
+        if(res.keys.length===0){ tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No keys created yet.</td></tr>'; return; }
+        tbody.innerHTML=res.keys.map(k=>`<tr><td class="key-cell">${k.key}</td><td>${k.duration}</td><td>${k.isUsed?'✓ Used by '+(k.usedBy||'—'):'● Available'}</td><td>${k.active!==false?'● Active':'○ Banned'}</td><td style="font-size:10px;color:var(--text-muted);">${new Date(k.createdAt).toLocaleDateString()}</td><td><button class="btn btn-sm ${k.active!==false?'btn-danger':'btn-success'}" onclick="window._resellerToggleKey('${k.key}')">${k.active!==false?'Ban':'Unban'}</button><button class="btn btn-sm btn-outline" onclick="window._resellerResetKey('${k.key}')" ${k.isUsed?'':'disabled'}>Reset</button><button class="btn btn-sm btn-danger" onclick="window._resellerDeleteKey('${k.key}')">Delete</button></td></tr>`).join('');
+      }else tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Failed to load.</td></tr>';
+    }catch{ tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Error loading.</td></tr>'; }
+  }
+  window._resellerRefreshKeys=loadResellerKeys;
+  window._resellerToggleKey=async function(key){
+    try{
+      const res=await apiCall('/api/reseller/toggle-key-active','POST',{key},getToken());
+      if(res.success){ showToast(res.message,'success'); loadResellerKeys(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+  window._resellerResetKey=async function(key){
+    if(!confirm(`Reset key "${key}"?`)) return;
+    try{
+      const res=await apiCall('/api/reseller/reset-key','POST',{key},getToken());
+      if(res.success){ showToast(res.message,'success'); loadResellerKeys(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+  window._resellerDeleteKey=async function(key){
+    if(!confirm(`Delete key "${key}"?`)) return;
+    try{
+      const res=await apiCall('/api/reseller/delete-key','DELETE',{key},getToken());
+      if(res.success){ showToast('Key deleted.','success'); loadResellerKeys(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+
+  async function loadResellerClients(){
+    const tbody=document.getElementById('resellerClientsBody'); if(!tbody) return;
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>';
+    try{
+      const res=await apiCall('/api/reseller/clients','GET',null,getToken());
+      if(res.success&&res.clients){
+        if(res.clients.length===0){ tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No clients yet.</td></tr>'; return; }
+        tbody.innerHTML=res.clients.map(c=>`<tr><td>${c.username}</td><td>${c.email||'—'}</td><td>${c.premiumStatus==='active'?'● Active':c.premiumStatus==='expired'?'◐ Expired':'○ Inactive'}</td><td style="font-size:10px;font-family:var(--mono);">${c.sid||'—'}</td><td>${c.active!==false?'● Active':'○ Banned'}</td><td><button class="btn btn-sm ${c.active!==false?'btn-danger':'btn-success'}" onclick="window._resellerToggleClient('${c.username}')">${c.active!==false?'Ban':'Unban'}</button><button class="btn btn-sm btn-outline" onclick="window._resellerResetClientSid('${c.username}')">Reset SID</button><button class="btn btn-sm btn-danger" onclick="window._resellerDeleteClient('${c.username}')">Delete</button></td></tr>`).join('');
+      }else tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Failed to load.</td></tr>';
+    }catch{ tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Error loading.</td></tr>'; }
+  }
+  window._resellerRefreshClients=loadResellerClients;
+  window._resellerToggleClient=async function(username){
+    try{
+      const res=await apiCall('/api/reseller/toggle-client-active','POST',{username},getToken());
+      if(res.success){ showToast(res.message,'success'); loadResellerClients(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+  window._resellerResetClientSid=async function(username){
+    if(!confirm(`Reset SID for "${username}"?`)) return;
+    try{
+      const res=await apiCall('/api/reseller/reset-client-sid','POST',{username},getToken());
+      if(res.success){ showToast(res.message,'success'); loadResellerClients(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+  window._resellerDeleteClient=async function(username){
+    if(!confirm(`Delete client "${username}"?`)) return;
+    try{
+      const res=await apiCall('/api/reseller/delete-client','DELETE',{username},getToken());
+      if(res.success){ showToast('Client deleted.','success'); loadResellerClients(); }else showToast(res.message||'Failed.','error');
+    }catch(err){ showToast('Error: '+err.message,'error'); }
+  };
+
+  // ============ লগআউট ============
+  window._logout=async function(){
+    const token=getToken();
+    if(token){ try{ await apiCall('/api/auth/logout','POST',null,token); }catch{} }
+    setToken(null); setUser(null); STATE.user=null; showToast('Logged out.','info'); navigate('login');
+  };
+
+  window._navigate=function(page){
+    if(page==='login'||page==='register'){ if(isLoggedIn()){ showToast('Already logged in.','info'); return; } navigate(page); return; }
+    if(!isLoggedIn()){ showToast('Please login first.','error'); navigate('login'); return; }
+    const role=getRole();
+    if(page==='admin'&&role!=='admin'){ showToast('Admin access only.','error'); return; }
+    if(page==='reseller'&&role!=='reseller'&&role!=='admin'){ showToast('Reseller access only.','error'); return; }
+    navigate(page);
+  };
+
+  document.getElementById('brandLink').addEventListener('click',(e)=>{
+    e.preventDefault();
+    if(!isLoggedIn()){ navigate('login'); return; }
+    const role=getRole(); navigate(role==='admin'?'admin':role==='reseller'?'reseller':'dashboard');
+  });
+
+  // ============ ইনিশিয়ালাইজ ============
+  function init(){
+    const token=getToken(), user=getUser();
+    if(token&&user){ STATE.token=token; STATE.user=user; const role=user.role||'client'; navigate(role==='admin'?'admin':role==='reseller'?'reseller':'dashboard'); }
+    else navigate('login');
+  }
+  init();
+})();
+</script>
+</body>
+</html>
